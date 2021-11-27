@@ -1,5 +1,11 @@
 # Backend
 
+## Preprocessing
+This should be done only if you're updating one of the py files for new python notebook code:
+ - Remove !pip commands
+ - Remove cd and ls commands
+ - Change /content/ directories to ./
+
 ## Update pip
 `python3 -m pip install --upgrade pip` or equivalent.
 

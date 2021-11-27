@@ -33,7 +33,7 @@ labels = []
 classes = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 
 for i in range(len(classes)):
-    file_list = glob.glob("/content/asl-alphabet/asl_alphabet_train/asl_alphabet_train/" + classes[i] + "/*.jpg")
+    file_list = glob.glob("./asl-alphabet/asl_alphabet_train/asl_alphabet_train/" + classes[i] + "/*.jpg")
     for item in range(1100):
         features.append(file_list[item])
         labels.append([i])

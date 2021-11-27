@@ -43,7 +43,7 @@ features = []
 labels = []
 
 for i in range(0, 60001):
-    file_list = glob.glob("/content/fashion-product-images-small/myntradataset/images/" + str(i) + ".jpg")
+    file_list = glob.glob("./fashion-product-images-small/myntradataset/images/" + str(i) + ".jpg")
     if (len(file_list) == 0):
       continue
     index = np.where(df.id == i)[0]
