@@ -16,3 +16,4 @@ For each dependency, run `python3 -m pip install <dependency> --upgrade` or equi
  - scikit-learn (sklearn)
  - tensorflow
    - Memory error: https://github.com/bjoernkarmann/project_alias/issues/14
+
