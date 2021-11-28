@@ -1,0 +1,83 @@
+.pageTitle {
+  height: 500px;
+  width: 100%;
+  display: flex;
+  background-color: #222;
+}
+
+.pageTitle .left {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.pageTitle .right {
+  width: 60%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 100px;
+
+}
+
+.pageTitle .titleContent {
+
+  color: white;
+  font-size: 50px;
+  margin-bottom: 50px;
+  display: flex;
+
+}
+
+.pageTitle .titleCodeologyIcon {
+  height: 60px;
+  margin-right: 20px;
+}
+
+.pageTitle .titleDescription {
+
+  color: white;
+  font-size: 17px;
+  width: 75%;
+  text-align: justify;
+  margin-bottom: 20px;
+
+}
+
+.pageTitle .titleAuthors {
+
+  color: #999;
+  font-size: 14px;
+  width: 75%;
+  text-align: justify;
+
+}
+
+@media screen and (max-width: 1000px) {
+  .pageTitle {
+    flex-direction: column;
+    height: auto;
+    align-items: center;
+    padding-bottom: 50px;
+  }
+
+  .pageTitle .left {
+    display: none;
+  }
+
+  .pageTitle .right {
+    width: 90%;
+    padding-left: 0px;
+    margin-top: 50px;
+  }
+
+  .pageTitle .titleDescription, .pageTitle .titleAuthors {
+    width: 100%;
+  }
+
+}

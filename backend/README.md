@@ -7,10 +7,10 @@ This should be done only if you're updating one of the py files for new python n
  - Change /content/ directories to ./
 
 ## Update pip
-`python3 -m pip install --upgrade pip` or equivalent.
+`python3 -m pip install --upgrade pip --user` or equivalent.
 
 ## Install dependencies
-For each dependency, run `python3 -m pip install <dependency> --upgrade` or equivalent.
+For each dependency, run `python3 -m pip install <dependency> --upgrade --user` or equivalent.
 
 ### Dependencies:
  - opendatasets
