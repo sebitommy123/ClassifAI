@@ -1,9 +1,13 @@
 import React from 'react';
 import './pageTitle.css';
-import mainImg from '../images/main.png';
-import codeologyImg from '../images/codeology.png';
 
-export const PageTitle = () => {
+export const PageTitle = ({
+  mainImg,
+  title,
+  titleImg,
+  text,
+  subtext
+}) => {
   return (
     <div className="pageTitle">
       <div className="left">
@@ -14,16 +18,14 @@ export const PageTitle = () => {
       </div>
       <div className="right">
         <div className="titleContent">
-          <img src={codeologyImg} className="titleCodeologyIcon"/>
-          ClassifAI
+          <img src={titleImg} className="titleCodeologyIcon"/>
+          {title}
         </div>
         <div className="titleDescription">
-          Applying Machine Learning to the real world by using Convolutional Neural Networks to classify images.<br />
-          <br />
-          Models include classification of Letters, Fashion items, Fungi, Heart conditions, Pneumonia conditions, and more. Built with tensorflow.
+          {text}
         </div>
         <div className="titleAuthors">
-          By Eric Berndt, Erin Tsai, Joelle Siong Sin, Larissa Tsai, Lincoln Too, Rachel Xin, Sebastiaan Szafir and Stephen Yang
+          {subtext}
         </div>
       </div>
     </div>

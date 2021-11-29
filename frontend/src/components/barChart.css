@@ -1,0 +1,35 @@
+.barChart {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.barChartItem {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
+}
+
+.barChartBar {
+  height: 25px;
+  background-color: #24A148;
+  
+  transition: width 0.5s;
+}
+
+.barChartLabel {
+  width: 20px;
+  color: white;
+  margin-left: 10px;
+}
+
+.barChartValue {
+  margin-left: 10px;
+  color: white;
+}
+
+.barChartImage {
+  margin-left: 10px;
+  height: 25px;
+}

@@ -1,0 +1,21 @@
+.divider {
+  background-color: #111;
+  padding: 70px 20px;
+  color: white;
+
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.divider .title {
+  font-size: 33px;
+  text-align: center;
+}
+
+.divider .content {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 15px;
+}

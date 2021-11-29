@@ -1,0 +1,66 @@
+.matrixInput {
+
+  
+
+}
+
+.matrixInput .header {
+  font-size: 23px; 
+  color: white;
+  text-align: center;
+}
+
+.matrixInput .iSection {
+  color: white;
+  margin-top: 20px;
+  background-color: #333;
+  padding: 10px;
+}
+
+.matrixInput .iSection .title {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.sampleList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  height: 250px;
+  overflow-y: auto;
+}
+
+.sampleList .sampleLabel {
+  color: white;
+  background-color: #24A148;
+  padding: 5px;
+  text-align: center;
+}
+
+.sampleList .sample {
+  margin: 10px;
+}
+
+.sampleList .sample .sampleImg {
+  cursor: pointer;
+}
+
+.sampleList .sample.selected, .selectedWhiteShadow {
+  box-shadow: #fff 0px 0px 10px; 
+  margin: 10px;
+  display: inline-block;
+}
+
+.selectedCustomImage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.selectedCustomImage h3 {
+  font-size: 17px;
+  font-weight: normal;
+  margin-bottom: 3px;
+}

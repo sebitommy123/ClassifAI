@@ -9,3 +9,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.fancyButton {
+  background-color: #24A148;
+  color: #fff;
+  font-size: 15px;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  display: inline-block;
+}
+
+.fancyButton.disabled {
+  background-color: #ccc;
+}
+
+.breadcrumb {
+  background-color: #111;
+  padding: 10px;
+  padding-left: 50px;
+  color: #999;
+}
+
+a {
+  color: #5265a3;
+}

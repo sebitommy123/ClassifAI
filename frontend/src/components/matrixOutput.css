@@ -1,0 +1,30 @@
+
+.matrixOutput.faded {
+  opacity: 0.5;
+}
+
+.matrixOutput .header {
+  font-size: 23px; 
+  color: white;
+  text-align: center;
+}
+
+.matrixOutput .result {
+  color: white;
+  margin-top: 55px;
+  font-size: 16px;
+  line-height: 30px;
+  display: flex;
+  margin-bottom: 55px;
+}
+
+.matrixOutput .result .resright {
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.matrixOutput .result .resright img {
+  width: 80px;
+  height: 80px;
+}
