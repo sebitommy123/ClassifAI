@@ -7,6 +7,11 @@ Original file is located at
     https://colab.research.google.com/drive/1BfsNiVNd_rXRN-jvLH2mLUI8DltSmRBe
 """
 
+import sys
+sys.path.insert(0, '..')
+import serveUnit
+
+
 import opendatasets as od
 import pandas as pd
 import numpy as np
@@ -28,12 +33,8 @@ import cv2
 
 od.download("https://www.kaggle.com/paramaggarwal/fashion-product-images-small")
 
-cd /content/fashion-product-images-small/
-
-ls
-
 #read csv file
-df = pd.read_csv("styles.csv", error_bad_lines=False)
+df = pd.read_csv("./fashion-product-images-small/styles.csv", error_bad_lines=False)
 
 df.head()
 
@@ -178,3 +179,11 @@ y_pred = np.argmax(model.predict(x_test),1)
 print("Precision : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
 print("Recall    : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
 print("F1 Score  : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
+
+def classify(image):
+    y_pred = model.predict(np.array([image]))
+    return y_pred[0]
+
+serveUnit.subscribe(classify)
+
+serveUnit.start(port=5002)

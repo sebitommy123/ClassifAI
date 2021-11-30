@@ -22,4 +22,7 @@ For each dependency, run `python3 -m pip install <dependency> --upgrade --user` 
  - scikit-learn (sklearn)
  - tensorflow
    - Memory error: https://github.com/bjoernkarmann/project_alias/issues/14
+ - tensorflow_hub
+ - flask
+ - flask_cors
 

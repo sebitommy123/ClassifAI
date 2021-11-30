@@ -2,18 +2,20 @@
 
 from threading import Thread
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 import json
 
 subscribed = None
 
 # creates a Flask application, named app
 app = Flask(__name__)
+CORS(app)
 
 @app.route("/", methods=['POST'])
 def pushMatrix():
     
     try:
-        matrix = json.loads(request.form["matrix"])
+        matrix = json.loads(request.args["matrix"])
 
         if (subscribed is not None):
             res = subscribed(matrix)
@@ -25,6 +27,7 @@ def pushMatrix():
         else:
             return '{"status": "internal error", "reason": "The script did not subscribe to the server!"}'
     except ValueError as e:
+        print(e)
         return '{"status": "error", "reason": "Please provide a valid matrix"}'
 
 def subscribe(func):
@@ -35,7 +38,7 @@ def appRun(port):
     app.run(port=port, debug=False)
 
 
-def start(port=5000, sync=False, debug=True):
+def start(port=5000, sync=False, debug=False):
 
     print("Preparing to serve on localhost:" + str(port))
 

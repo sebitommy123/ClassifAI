@@ -7,6 +7,10 @@ Original file is located at
     https://colab.research.google.com/drive/1QSCOG4IJdpbtNvN2fubBnY4raWyGy7uG
 """
 
+import sys
+sys.path.insert(0, '..')
+import serveUnit
+
 import opendatasets as od
 import pandas as pd
 import numpy as np
@@ -118,3 +122,11 @@ y_pred = np.argmax(model.predict(x_test),1)
 print("Precision : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
 print("Recall    : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
 print("F1 Score  : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
+
+def classify(image):
+    y_pred = model.predict(np.array([image]))
+    return y_pred[0]
+
+serveUnit.subscribe(classify)
+
+serveUnit.start(port=5001)

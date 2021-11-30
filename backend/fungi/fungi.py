@@ -7,13 +7,14 @@ Original file is located at
     https://colab.research.google.com/drive/1H2zSYh3-sSH3VTx4PQKrRcsv4lFFkraz
 """
 
-!pip install opendatasets
+import sys
+sys.path.insert(0, '..')
+import serveUnit
 
 import os
 import seaborn as sns
 import numpy as np
 import tensorflow as tf
-import tensorflow_datasets as tfds
 import tensorflow_hub as hub 
 import matplotlib.pyplot as plt
 import sklearn
@@ -23,8 +24,6 @@ import opendatasets as od
 import time
 
 od.download("https://www.kaggle.com/marcosvolpato/edible-and-poisonous-fungi")
-
-cd
 
 def show_image(file_path):
     img = tf.keras.preprocessing.image.load_img(file_path, target_size=(228, 228))
@@ -58,7 +57,7 @@ def get_balanced_dataset(edible_fungies, poisonous_fungies, batch_count, batch_s
         batch_size
     ), samle_count
 
-base_path = "/content/edible-and-poisonous-fungi/"
+base_path = "./edible-and-poisonous-fungi/"
 lables = ["edible", "poisonous"]
 directory_group = [
     ['edible mushroom sporocarp', 'edible sporocarp'], 
@@ -88,15 +87,15 @@ print(len(train_edible_fungies), len(valid_edible_fungies))
 print(len(train_poisonous_fungies), len(valid_poisonous_fungies))
 num_batch_per_epoch = min(len(train_edible_fungies), len(train_poisonous_fungies)) // batch_size
 print(num_batch_per_epoch)
-num_epochs = 3
+num_epochs = 0
 train_edible_fungies = np.array(train_edible_fungies)
 valid_edible_fungies = np.array(valid_edible_fungies)
 train_poisonous_fungies = np.array(train_poisonous_fungies)
 valid_poisonous_fungies = np.array(valid_poisonous_fungies)
 total_valid_count = len(valid_edible_fungies) + len(valid_poisonous_fungies)
 
-for i in range(4):
-    show_image(poisonous_fungies[np.random.randint(len(poisonous_fungies))])
+#for i in range(4):
+#    show_image(poisonous_fungies[np.random.randint(len(poisonous_fungies))])
 
 IMAGE_SIZE = 224
 handle_base = "mobilenet_v2"
@@ -176,3 +175,11 @@ for (x_batch, y_true) in valid_dataset:
 
 cls_report = classification_report(predicted_labels, actual_labels)
 print(cls_report)
+
+def classify(image):
+    y_pred = model(np.array([image]))
+    return "[" + ",".join(str(y_pred).split("[[")[1].split("]]")[0].split(" ")) + "]"
+
+serveUnit.subscribe(classify)
+
+serveUnit.start(port=5003)

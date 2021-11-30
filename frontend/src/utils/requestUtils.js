@@ -1,8 +1,14 @@
+import axios from 'axios';
 
-export function sendMatrix(endpoint, matrix) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve((new Array(5).fill(0).map(() => Math.random())));
-    }, 1000);
-  });
+export async function sendMatrix(endpoint, matrix) {
+  //make http request to endpoint via post method with matrix as param
+
+  console.log(matrix[0].length, matrix.length);
+  console.log(JSON.stringify(matrix));
+  
+  const res = await axios.post(endpoint + "?matrix=" + JSON.stringify(matrix));
+  
+  console.log(res);
+
+  return res.data;
 }

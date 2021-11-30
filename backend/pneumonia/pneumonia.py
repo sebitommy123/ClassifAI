@@ -7,7 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/127HwVd_OMWoEpD7JPE_7kpjS03s3_20z
 """
 
-!pip3 install opendatasets
+import sys
+sys.path.insert(0, '..')
+import serveUnit
 
 import numpy as np 
 import pandas as pd 
@@ -42,13 +44,10 @@ def get_training_data(data_dir):
                 print(e)
     return np.array(data)
 
-train = get_training_data('/content/chest-xray-pneumonia/chest_xray/chest_xray/train')
-test = get_training_data('/content/chest-xray-pneumonia/chest_xray/chest_xray/test')
-val = get_training_data('/content/chest-xray-pneumonia/chest_xray/chest_xray/val')
+train = get_training_data('./chest-xray-pneumonia/chest_xray/chest_xray/train')
+test = get_training_data('./chest-xray-pneumonia/chest_xray/chest_xray/test')
+val = get_training_data('./chest-xray-pneumonia/chest_xray/chest_xray/val')
 
-cd content
-
-ls
 
 plt.figure(figsize = (5,5))
 plt.imshow(train[0][0], cmap='gray')
@@ -124,22 +123,30 @@ sns.heatmap(cm,cmap= "Blues", linecolor = 'black' , linewidth = 1 , annot = True
 correct = np.nonzero(predictions == y_test)[0]
 incorrect = np.nonzero(predictions != y_test)[0]
 
-i = 0
-for c in correct[:6]:
-    plt.subplot(3,2,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.imshow(x_test[c].reshape(150,150), cmap="gray", interpolation='none')
-    plt.title("Predicted Class {},Actual Class {}".format(predictions[c], y_test[c]))
-    plt.tight_layout()
-    i += 1
+#i = 0
+#for c in correct[:6]:
+#    plt.subplot(3,2,i+1)
+#    plt.xticks([])
+#    plt.yticks([])
+#    plt.imshow(x_test[c].reshape(150,150), cmap="gray", interpolation='none')
+#    plt.title("Predicted Class {},Actual Class {}".format(predictions[c], y_test[c]))
+#    plt.tight_layout()
+#    i += 1
 
-i = 0
-for c in incorrect[:6]:
-    plt.subplot(3,2,i+1)
-    plt.xticks([])
-    plt.yticks([])
-    plt.imshow(x_test[c].reshape(150,150), cmap="gray", interpolation='none')
-    plt.title("Predicted Class {},Actual Class {}".format(predictions[c], y_test[c]))
-    plt.tight_layout()
-    i += 1
+#i = 0
+#for c in incorrect[:6]:
+#    plt.subplot(3,2,i+1)
+#    plt.xticks([])
+#    plt.yticks([])
+#    plt.imshow(x_test[c].reshape(150,150), cmap="gray", interpolation='none')
+#    plt.title("Predicted Class {},Actual Class {}".format(predictions[c], y_test[c]))
+#    plt.tight_layout()
+#    i += 1
+
+def classify(image):
+    y_pred = model.predict(np.array([image]))
+    return y_pred[0]
+
+serveUnit.subscribe(classify)
+
+serveUnit.start(port=5005)

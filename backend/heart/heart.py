@@ -7,7 +7,9 @@ Original file is located at
     https://colab.research.google.com/drive/1uCkcYkw5h9K9Qr-xvE1gXsNjaI3eelYN
 """
 
-!pip install opendatasets
+import sys
+sys.path.insert(0, '..')
+import serveUnit
 
 import opendatasets as od
 import pandas as pd
@@ -26,13 +28,7 @@ from tensorflow import keras
 
 od.download("https://www.kaggle.com/rashikrahmanpritom/heart-attack-analysis-prediction-dataset")
 
-ls
-
-cd heart-attack-analysis-prediction-dataset/
-
-ls
-
-df = pd.read_csv("heart.csv")
+df = pd.read_csv("./heart-attack-analysis-prediction-dataset/heart.csv")
 
 df.head()
 
@@ -80,3 +76,11 @@ history = model.fit(
 test_loss, test_acc = model.evaluate(X_test, y_test)
 
 print('Test accuracy:', test_acc)
+
+def classify(image):
+    y_pred = model.predict(np.array([image]))
+    return y_pred[0]
+
+serveUnit.subscribe(classify)
+
+serveUnit.start(port=5004)
