@@ -7,6 +7,8 @@ import mainImg from "../images/main.png";
 import codeologyImg from "../images/codeology.png";
 import alphabetImg from "../images/signLanguage/alphabet.jpg";
 import neuralNetworkImage from "../images/neuralNetwork.jpg";
+import edibleFungi from '../images/fungi/edible.jpeg';
+import clothingImg from '../images/fashion/tshirt.jpg';
 
 const Home = () => {
   return (
@@ -73,7 +75,7 @@ const Home = () => {
       />
 
       <Section
-        image={alphabetImg}
+        image={edibleFungi}
         title='ClassiFungAI'
         content={
           <>
@@ -103,7 +105,6 @@ const Home = () => {
       <Section
         image={alphabetImg}
         title='Heart'
-        alt
         content={
           <>
             ClassifAIs different locations in UCB
@@ -113,6 +114,20 @@ const Home = () => {
         subtext={"Contributors: Heart"}
         buttonText='Go to project'
         href='/heart'
+      />
+
+      <Section
+        image={clothingImg}
+        title='ClothesifAI'
+        alt
+        content={
+          <>
+            A model that classifies any article of clothing into several distinct categories using Keras and Tensorflow.
+          </>
+        }
+        subtext={"Contributors: Rachel Xin"}
+        buttonText='Go to project'
+        href='/fashion'
       />
     </div>
   );

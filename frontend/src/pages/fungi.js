@@ -13,12 +13,11 @@ const Fungi = () => {
 
   return (
     <div>
-      <ImageHeader image={wallpaper} title="SAIgn Language" description={(<>
-        Low awareness of sign language presents a hurdle in communication with the deaf and dumb communities. <br /><br />
-        This classifier is trained to identify the American Sign Language hand gestures with potential application as a Sign Language Interpreter.
+      <ImageHeader image={wallpaper} title="ClassiFungAI" description={(<>
+        A CNN that classifies images of fungi (mushrooms or otherwise) as edible or poisonous.
       </>)} subtext="Contributors: Lincoln"/>
       <div className="breadcrumb">
-        <Link to="/">Home</Link> > SAIgn Language
+        <Link to="/">Home</Link> > ClassiFungAI
       </div>
       <NeuralNetworkInterface
         endpoint={"localhost"}

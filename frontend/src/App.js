@@ -6,6 +6,7 @@ import Fungi from './pages/fungi';
 import Pneumonia from './pages/pneumonia';
 import Berkeley from './pages/berkeley';
 import Heart from './pages/heart';
+import Fashion from './pages/fashion';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/pneumonia" element={<Pneumonia />}></Route>
         <Route path="/berkeley" element={<Berkeley />}></Route>
         <Route path="/heart" element={<Heart />}></Route>
+        <Route path="/fashion" element={<Fashion />}></Route>
       </Routes>
     </div>
   );
