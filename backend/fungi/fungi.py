@@ -176,10 +176,24 @@ for (x_batch, y_true) in valid_dataset:
 cls_report = classification_report(predicted_labels, actual_labels)
 print(cls_report)
 
+model.save("lastModel.h5")
+
 def classify(image):
     y_pred = model(np.array([image]))
-    return "[" + ",".join(str(y_pred).split("[[")[1].split("]]")[0].split(" ")) + "]"
+    res = "[" + ",".join(str(y_pred).split("[[")[1].split("]]")[0].split(" ")) + "]"
+    res = res.replace(",,", ",")
+    res = res.replace(",,", ",")
+    res = res.replace(",,", ",")
+
+    if (res[-1] == ","):
+        res = res[:-1]
+    if (res[-1] == ","):
+        res = res[:-1]
+    if (res[-1] == ","):
+        res = res[:-1]
+
+    return res # yup, i just did that. if you know how tensors work, please fix :)
 
 serveUnit.subscribe(classify)
 
-serveUnit.start(port=5003)
+serveUnit.start(port=5005)

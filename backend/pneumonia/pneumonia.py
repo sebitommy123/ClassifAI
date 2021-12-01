@@ -10,6 +10,7 @@ Original file is located at
 import sys
 sys.path.insert(0, '..')
 import serveUnit
+import json
 
 import numpy as np 
 import pandas as pd 
@@ -107,8 +108,13 @@ model.add(Dense(units = 128 , activation = 'relu'))
 model.add(Dense(units = 1 , activation = 'sigmoid'))
 model.compile(optimizer = "rmsprop" , loss = 'binary_crossentropy' , metrics = ['accuracy'])
 model.summary()
+if (os.path.exists("./lastModel.h5")):
+    print("Found cached model")
+    model = keras.models.load_model("./lastModel.h5")
+else:
+    history = model.fit(x_train,y_train, batch_size = 32 , epochs = 7)
 
-history = model.fit(x_train,y_train, batch_size = 32 , epochs = 7)
+model.save("lastModel.h5")
 
 print("Loss of the model is - " , model.evaluate(x_test,y_test)[0])
 print("Accuracy of the model is - " , model.evaluate(x_test,y_test)[1]*100 , "%")
@@ -145,8 +151,8 @@ incorrect = np.nonzero(predictions != y_test)[0]
 
 def classify(image):
     y_pred = model.predict(np.array([image]))
-    return y_pred[0]
+    return json.dumps(y_pred.tolist())
 
 serveUnit.subscribe(classify)
 
-serveUnit.start(port=5005)
+serveUnit.start(port=5007)

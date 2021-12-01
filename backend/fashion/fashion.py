@@ -10,7 +10,8 @@ Original file is located at
 import sys
 sys.path.insert(0, '..')
 import serveUnit
-
+import os
+import json
 
 import opendatasets as od
 import pandas as pd
@@ -155,25 +156,17 @@ x_train = np.array(x_train)
 y_train = np.array(y_train) 
 x_test = np.array(x_test)
 y_test = np.array(y_test)
-history = model.fit(x_train,
+
+if (os.path.exists("./lastModel.h5")):
+  print("Found cached model")
+  model = keras.models.load_model("./lastModel.h5")
+else:
+  history = model.fit(x_train,
           y_train,
           epochs=5,
           validation_data = (x_test,y_test))
 
-plt.style.use('seaborn')
-plt.figure(figsize=(10,10))
-plt.plot(history.history['loss'], color='b', label="Training loss")
-plt.plot(history.history['val_loss'], color='r', label="Validation loss")
-plt.legend()
-plt.show()
-
-plt.figure()
-
-plt.figure(figsize=(8,8))
-plt.plot(history.history['accuracy'], color='b', label="Training accuracy")
-plt.plot(history.history['val_accuracy'], color='r',label="Validation accuracy")
-plt.legend()
-plt.show()
+model.save("lastModel.h5")
 
 y_pred = np.argmax(model.predict(x_test),1)
 print("Precision : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
@@ -182,8 +175,8 @@ print("F1 Score  : {:.2f} %".format(precision_score(y_pred,y_test,average='macro
 
 def classify(image):
     y_pred = model.predict(np.array([image]))
-    return y_pred[0]
+    return json.dumps(y_pred[0].tolist())
 
 serveUnit.subscribe(classify)
 
-serveUnit.start(port=5002)
+serveUnit.start(port=5004)

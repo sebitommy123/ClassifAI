@@ -9,6 +9,9 @@ import alphabetImg from "../images/signLanguage/alphabet.jpg";
 import neuralNetworkImage from "../images/neuralNetwork.jpg";
 import edibleFungi from '../images/fungi/edible.jpeg';
 import clothingImg from '../images/fashion/tshirt.jpg';
+import pneumoniaImg from '../images/pneunomia/pneunomia.jpeg';
+import brainImg from '../images/brain/brain.jpg';
+import campanileImg from '../images/berkeley/campanile.jpg';
 
 const Home = () => {
   return (
@@ -60,7 +63,7 @@ const Home = () => {
       />
 
       <Section
-        image={alphabetImg}
+        image={pneumoniaImg}
         title='ChestifAI'
         alt
         content={
@@ -88,7 +91,7 @@ const Home = () => {
       />
 
       <Section
-        image={alphabetImg}
+        image={campanileImg}
         title='BerkelAI'
         alt
         content={
@@ -103,17 +106,17 @@ const Home = () => {
       />
 
       <Section
-        image={alphabetImg}
-        title='Heart'
+        image={brainImg}
+        title='Brain'
         content={
           <>
             ClassifAIs different locations in UCB
             Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum 
           </>
         }
-        subtext={"Contributors: Heart"}
+        subtext={"Contributors: Erin Tsai"}
         buttonText='Go to project'
-        href='/heart'
+        href='/brain'
       />
 
       <Section

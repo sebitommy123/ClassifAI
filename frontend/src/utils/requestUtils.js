@@ -10,5 +10,5 @@ export async function sendMatrix(endpoint, matrix) {
   
   console.log(res);
 
-  return res.data;
+  return res.data.result;
 }

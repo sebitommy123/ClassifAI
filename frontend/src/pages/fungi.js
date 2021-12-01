@@ -20,13 +20,13 @@ const Fungi = () => {
         <Link to="/">Home</Link> > ClassiFungAI
       </div>
       <NeuralNetworkInterface
-        endpoint={"localhost"}
-        port={5003}
+        endpoint={"http://localhost"}
+        port={5005}
         inputDimensions={[224, 224]}
-        labels={["Edible", "Poisonous"]}
+        labels={["Poisonous", "Edible"]}
         imageLabels={testingSet}
         samples={testingSet}
-        sampleLabels={["Edible", "Poisonous"]}
+        sampleLabels={["Poisonous", "Edible"]}
       />
     </div>
   )

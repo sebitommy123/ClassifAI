@@ -10,6 +10,8 @@ Original file is located at
 import sys
 sys.path.insert(0, '..')
 import serveUnit
+import os
+import json
 
 import opendatasets as od
 import pandas as pd
@@ -64,14 +66,19 @@ model.compile(optimizer = 'Adam', loss = 'binary_crossentropy', metrics = ['bina
 
 early_stopping = keras.callbacks.EarlyStopping( patience = 20, min_delta = 0.001,
                                                restore_best_weights =True )
-history = model.fit(
-    X_train, y_train,
-    validation_data=(X_test, y_test),
-    batch_size=15,
-    epochs=50,
-    callbacks = [early_stopping],
-    verbose=1, 
-)
+
+if (os.path.exists("./lastModel.h5")):
+  print("Found cached model")
+  model = keras.models.load_model("./lastModel.h5")
+else:
+    history = model.fit(
+        X_train, y_train,
+        validation_data=(X_test, y_test),
+        batch_size=15,
+        epochs=50,
+        callbacks = [early_stopping],
+        verbose=1, 
+    )
 
 test_loss, test_acc = model.evaluate(X_test, y_test)
 
@@ -79,8 +86,8 @@ print('Test accuracy:', test_acc)
 
 def classify(image):
     y_pred = model.predict(np.array([image]))
-    return y_pred[0]
+    return json.dumps(y_pred[0].tolist())
 
 serveUnit.subscribe(classify)
 
-serveUnit.start(port=5004)
+serveUnit.start(port=5006)
