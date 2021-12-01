@@ -29,7 +29,7 @@ const Fashion = () => {
         <Link to="/">Home</Link> > ClothesifAI
       </div>
       <NeuralNetworkInterface
-        endpoint={"http://localhost"}
+        endpoint={"http://3.17.130.121"}
         port={5004}
         inputDimensions={[80,60]}
         labels={['Shirts', 'Jeans', 'Watches', 'Track Pants', 'Tshirts', 'Socks', 'Casual Shoes',

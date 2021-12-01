@@ -32,146 +32,148 @@ from tensorflow import keras
 import glob
 import cv2
 
-od.download("https://www.kaggle.com/paramaggarwal/fashion-product-images-small")
-
-#read csv file
-df = pd.read_csv("./fashion-product-images-small/styles.csv", error_bad_lines=False)
-
-df.head()
-
-classes = df.articleType.unique()
-
-features = []
-labels = []
-
-for i in range(0, 60001):
-    file_list = glob.glob("./fashion-product-images-small/myntradataset/images/" + str(i) + ".jpg")
-    if (len(file_list) == 0):
-      continue
-    index = np.where(df.id == i)[0]
-    if (len(index) == 0):
-      print(str(i) + "<-id failed", index)
-      continue
-    features.append(file_list[0])
-    labels.append(df.articleType[index[0]])
-
-print("Dataset Feature size : ",len(features))
-print("Dataset labels size : ",len(labels))
-print(len(df))
-
-print(labels[0:10])
-print(features[0:10])
-
-x_train = []
-y_train = []
-x_test = []
-y_test = []
-
-for i in range(len(features)):
-    feature = features[i]
-    label = labels[i]
-
-    matrix = cv2.imread(feature,cv2.IMREAD_COLOR)
-
-    shape = matrix.shape
-
-    if (shape[0] != 80):
-      print(shape)
-      continue
-    if (shape[1] != 60):
-      print(shape)
-      continue
-    
-    x_train.append(matrix)
-    x_train[-1] = np.reshape(x_train[-1],[80,60,3])
-    y_train.append(np.where(classes == label)[0][0]) #not not not normalized (like rachel)
-
-x_train,x_test,y_train,y_test = train_test_split(x_train,y_train,test_size=0.2)
-print("Train data : ",len(x_train),len(y_train))
-print("Validation data : ",len(x_test),len(y_test))
-
-print(classes[y_test[4]])
-plt.imshow(x_test[4], interpolation='nearest')
-
-print(len(classes))
-
-model = Sequential()
-
-model.add(keras.layers.Conv2D(32,(3,3),activation="relu",padding="same",input_shape=(80,60,3)))
-model.add(keras.layers.Conv2D(32,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.MaxPooling2D(2,2))
-
-model.add(keras.layers.Conv2D(64,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.Conv2D(64,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.MaxPooling2D(2,2))
-
-model.add(keras.layers.Conv2D(128,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.Conv2D(128,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.MaxPooling2D(2,2))
-
-model.add(keras.layers.Conv2D(256,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.Conv2D(256,(3,3),activation="relu",padding="same"))
-
-model.add(keras.layers.Flatten())
-
-model.add(keras.layers.Dense(512,activation="relu"))
-model.add(keras.layers.Dropout(0.5))
-
-model.add(keras.layers.Dense(len(classes),activation="softmax"))
-
-opt = keras.optimizers.Adam(learning_rate=0.0001)
-model.compile(optimizer=opt,loss="sparse_categorical_crossentropy",metrics=['accuracy'])
-model.summary()
-
-model = Sequential()
-
-model.add(keras.layers.Conv2D(32,(3,3),activation="relu",padding="same",input_shape=(80,60,3)))
-model.add(keras.layers.Conv2D(32,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.MaxPooling2D(2,2))
-
-model.add(keras.layers.Conv2D(64,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.Conv2D(64,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.MaxPooling2D(2,2))
-
-model.add(keras.layers.Conv2D(128,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.Conv2D(128,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.MaxPooling2D(2,2))
-
-model.add(keras.layers.Conv2D(256,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.Conv2D(256,(3,3),activation="relu",padding="same"))
-model.add(keras.layers.MaxPooling2D(2,2))
-
-model.add(keras.layers.Flatten())
-
-model.add(keras.layers.Dense(512,activation="relu"))
-model.add(keras.layers.Dropout(0.5))
-
-model.add(keras.layers.Dense(len(classes),activation="softmax"))
-
-opt = keras.optimizers.Adam(learning_rate=0.0001)
-model.compile(optimizer=opt,loss="sparse_categorical_crossentropy",metrics=['accuracy'])
-model.summary()
-
-x_train = np.array(x_train)
-y_train = np.array(y_train) 
-x_test = np.array(x_test)
-y_test = np.array(y_test)
+model = 0
 
 if (os.path.exists("./lastModel.h5")):
   print("Found cached model")
   model = keras.models.load_model("./lastModel.h5")
 else:
+  od.download("https://www.kaggle.com/paramaggarwal/fashion-product-images-small")
+
+  #read csv file
+  df = pd.read_csv("./fashion-product-images-small/styles.csv", error_bad_lines=False)
+
+  df.head()
+
+  classes = df.articleType.unique()
+
+  features = []
+  labels = []
+
+  for i in range(0, 60001):
+      file_list = glob.glob("./fashion-product-images-small/myntradataset/images/" + str(i) + ".jpg")
+      if (len(file_list) == 0):
+        continue
+      index = np.where(df.id == i)[0]
+      if (len(index) == 0):
+        print(str(i) + "<-id failed", index)
+        continue
+      features.append(file_list[0])
+      labels.append(df.articleType[index[0]])
+
+  print("Dataset Feature size : ",len(features))
+  print("Dataset labels size : ",len(labels))
+  print(len(df))
+
+  print(labels[0:10])
+  print(features[0:10])
+
+  x_train = []
+  y_train = []
+  x_test = []
+  y_test = []
+
+  for i in range(len(features)):
+      feature = features[i]
+      label = labels[i]
+
+      matrix = cv2.imread(feature,cv2.IMREAD_COLOR)
+
+      shape = matrix.shape
+
+      if (shape[0] != 80):
+        print(shape)
+        continue
+      if (shape[1] != 60):
+        print(shape)
+        continue
+      
+      x_train.append(matrix)
+      x_train[-1] = np.reshape(x_train[-1],[80,60,3])
+      y_train.append(np.where(classes == label)[0][0]) #not not not normalized (like rachel)
+
+  x_train,x_test,y_train,y_test = train_test_split(x_train,y_train,test_size=0.2)
+  print("Train data : ",len(x_train),len(y_train))
+  print("Validation data : ",len(x_test),len(y_test))
+
+  print(classes[y_test[4]])
+  plt.imshow(x_test[4], interpolation='nearest')
+
+  print(len(classes))
+
+  model = Sequential()
+
+  model.add(keras.layers.Conv2D(32,(3,3),activation="relu",padding="same",input_shape=(80,60,3)))
+  model.add(keras.layers.Conv2D(32,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.MaxPooling2D(2,2))
+
+  model.add(keras.layers.Conv2D(64,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.Conv2D(64,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.MaxPooling2D(2,2))
+
+  model.add(keras.layers.Conv2D(128,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.Conv2D(128,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.MaxPooling2D(2,2))
+
+  model.add(keras.layers.Conv2D(256,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.Conv2D(256,(3,3),activation="relu",padding="same"))
+
+  model.add(keras.layers.Flatten())
+
+  model.add(keras.layers.Dense(512,activation="relu"))
+  model.add(keras.layers.Dropout(0.5))
+
+  model.add(keras.layers.Dense(len(classes),activation="softmax"))
+
+  opt = keras.optimizers.Adam(learning_rate=0.0001)
+  model.compile(optimizer=opt,loss="sparse_categorical_crossentropy",metrics=['accuracy'])
+  model.summary()
+
+  model = Sequential()
+
+  model.add(keras.layers.Conv2D(32,(3,3),activation="relu",padding="same",input_shape=(80,60,3)))
+  model.add(keras.layers.Conv2D(32,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.MaxPooling2D(2,2))
+
+  model.add(keras.layers.Conv2D(64,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.Conv2D(64,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.MaxPooling2D(2,2))
+
+  model.add(keras.layers.Conv2D(128,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.Conv2D(128,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.MaxPooling2D(2,2))
+
+  model.add(keras.layers.Conv2D(256,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.Conv2D(256,(3,3),activation="relu",padding="same"))
+  model.add(keras.layers.MaxPooling2D(2,2))
+
+  model.add(keras.layers.Flatten())
+
+  model.add(keras.layers.Dense(512,activation="relu"))
+  model.add(keras.layers.Dropout(0.5))
+
+  model.add(keras.layers.Dense(len(classes),activation="softmax"))
+
+  opt = keras.optimizers.Adam(learning_rate=0.0001)
+  model.compile(optimizer=opt,loss="sparse_categorical_crossentropy",metrics=['accuracy'])
+  model.summary()
+
+  x_train = np.array(x_train)
+  y_train = np.array(y_train) 
+  x_test = np.array(x_test)
+  y_test = np.array(y_test)
+
   history = model.fit(x_train,
           y_train,
           epochs=5,
           validation_data = (x_test,y_test))
 
-model.save("lastModel.h5")
+  model.save("lastModel.h5")
 
-y_pred = np.argmax(model.predict(x_test),1)
-print("Precision : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
-print("Recall    : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
-print("F1 Score  : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
+  y_pred = np.argmax(model.predict(x_test),1)
+  print("Precision : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
+  print("Recall    : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
+  print("F1 Score  : {:.2f} %".format(precision_score(y_pred,y_test,average='macro')))
 
 def classify(image):
     y_pred = model.predict(np.array([image]))
