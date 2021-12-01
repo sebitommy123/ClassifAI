@@ -20,7 +20,7 @@ const Fungi = () => {
         <Link to="/">Home</Link> > ClassiFungAI
       </div>
       <NeuralNetworkInterface
-        endpoint={"http://localhost"}
+        endpoint={"http://3.17.130.121"}
         port={5005}
         inputDimensions={[224, 224]}
         labels={["Poisonous", "Edible"]}

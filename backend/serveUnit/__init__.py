@@ -35,7 +35,7 @@ def subscribe(func):
     subscribed = func
 
 def appRun(port):
-    app.run(port=port, debug=False)
+    app.run(port=port, debug=False, host="0.0.0.0")
 
 
 def start(port=5000, sync=False, debug=False):
