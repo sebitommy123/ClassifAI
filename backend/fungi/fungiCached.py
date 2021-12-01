@@ -24,7 +24,7 @@ import opendatasets as od
 import time
 from tensorflow import keras
 
-model = keras.models.load_model("./lastModel.h5")
+model = keras.models.load_model("./lastModel.h5", custom_objects={'KerasLayer':hub.KerasLayer})
 
 def classify(image):
     y_pred = model(np.array([image]))
