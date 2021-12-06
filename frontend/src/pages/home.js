@@ -107,7 +107,7 @@ const Home = () => {
 
       <Section
         image={brainImg}
-        title='Brain'
+        title='BrAIn'
         content={
           <>
             ClassifAIs different locations in UCB
